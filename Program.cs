@@ -9,7 +9,8 @@ class Program
     private static readonly string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
     static void Main(string[] args)
     {
-        ReadUsers();
+        // ReadUsers();
+        ReadUser();
     }
 
     public static void ReadUsers()
@@ -17,13 +18,24 @@ class Program
         using (var connection = new SqlConnection(_connectionString))
         {
             connection.Open();
-            
+
             var users = connection.GetAll<User>();
 
             foreach (var user in users)
             {
                 Console.WriteLine(user.Name);
             }
+
+        }
+    }
+    public static void ReadUser()
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            var user = connection.Get<User>(1);
+            Console.WriteLine(user?.Name);
         }
     }
 }

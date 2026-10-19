@@ -1,6 +1,6 @@
 CREATE TABLE [User] (
     [Id]           INT            IDENTITY (1, 1) NOT NULL,
-    [Name ]        NVARCHAR (80)  NOT NULL,
+    [Name]         NVARCHAR (80)  NOT NULL,
     [Email]        VARCHAR (200)  NOT NULL,
     [PasswordHash] VARCHAR (255)  NOT NULL,
     [Bio]          TEXT           NOT NULL,

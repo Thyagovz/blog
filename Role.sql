@@ -1,6 +1,6 @@
 CREATE TABLE [Role] (
     [Id]    INT          IDENTITY (1, 1) NOT NULL,
-    [Name ] VARCHAR (80) NOT NULL,
+    [Name]  VARCHAR (80) NOT NULL,
     [Slug]  VARCHAR (80) NOT NULL,
     CONSTRAINT [PK_Role] PRIMARY KEY ([Id]),
     CONSTRAINT [UQ_Role_Slug] UNIQUE ([Slug])

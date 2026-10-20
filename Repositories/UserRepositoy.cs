@@ -19,5 +19,4 @@ public class UserRepository
 
     public void Create(User user)
         => _connection.Insert<User>(user);
-
 }

@@ -11,13 +11,11 @@ class Program
     static void Main(string[] args)
     {
         var connection = new SqlConnection(_connectionString);
-
         connection.Open();
+
         ReadUsers(connection);
-        // ReadUser();
-        // CreateUser();
-        // UpdateUser();
-        // DeleteUser();
+        ReadRoles(connection);
+
         connection.Close();
 
     }
@@ -29,64 +27,13 @@ class Program
         foreach (var user in users)
             Console.WriteLine(user.Name);
     }
-    public static void ReadUser()
+    public static void ReadRoles(SqlConnection connection)
     {
-        using (var connection = new SqlConnection())
-        {
-            connection.Open();
+        var repository = new RoleRepository(connection);
+        var roles = repository.Get();
 
-            var user = connection.Get<User>(1);
-            Console.WriteLine(user?.Name);
-        }
+        foreach (var role in roles)
+            Console.WriteLine(role.Name);
     }
-    public static void CreateUser()
-    {
-        var user = new User()
-        {
-            Bio = "Equipe thyago.io",
-            Email = "hello@thyago.io",
-            Image = "http://...",
-            Name = "Equipe thyago.io",
-            PasswordHash = "HASH",
-            Slug = "equipe-thyago"
-        };
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
 
-            connection.Insert<User>(user);
-            Console.WriteLine("Cadastro realizado com sucesso");
-        }
-    }
-    public static void UpdateUser()
-    {
-        var user = new User()
-        {
-            Id = 1,
-            Bio = "Equipe | thyago.io",
-            Email = "hello@thyago.io",
-            Image = "http://...",
-            Name = "Equipe de suporte thyago.io",
-            PasswordHash = "HASH",
-            Slug = "equipe-thyago"
-        };
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-
-            connection.Update<User>(user);
-            Console.WriteLine("Atualização realizado com sucesso");
-        }
-    }
-    public static void DeleteUser()
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-
-            var user = connection.Get<User>(1);
-            connection.Delete<User>(user);
-            Console.WriteLine("Exclusão realizada com sucesso!");
-        }
-    }
 }

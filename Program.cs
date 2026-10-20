@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Blog.Repositories;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
@@ -9,31 +10,28 @@ class Program
     private static readonly string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
     static void Main(string[] args)
     {
-        // ReadUsers();
+        var connection = new SqlConnection(_connectionString);
+
+        connection.Open();
+        ReadUsers(connection);
         // ReadUser();
         // CreateUser();
         // UpdateUser();
-        DeleteUser();
+        // DeleteUser();
+        connection.Close();
+
     }
-
-    public static void ReadUsers()
+    public static void ReadUsers(SqlConnection connection)
     {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
+        var repository = new UserRepository(connection);
+        var users = repository.Get();
 
-            var users = connection.GetAll<User>();
-
-            foreach (var user in users)
-            {
-                Console.WriteLine(user.Name);
-            }
-
-        }
+        foreach (var user in users)
+            Console.WriteLine(user.Name);
     }
     public static void ReadUser()
     {
-        using (var connection = new SqlConnection(_connectionString))
+        using (var connection = new SqlConnection())
         {
             connection.Open();
 

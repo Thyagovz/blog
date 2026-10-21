@@ -10,13 +10,13 @@ class Program
     private static readonly string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
     static void Main(string[] args)
     {
-        var connection = new SqlConnection(_connectionString);
-        connection.Open();
+        Database.Connection = new SqlConnection(_connectionString);
+        Database.Connection.Open();
 
         Load();
 
         Console.ReadKey();
-        connection.Close();
+        Database.Connection.Close();
     }
 
     private static void Load()

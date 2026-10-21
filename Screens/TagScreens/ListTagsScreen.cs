@@ -12,6 +12,7 @@ public static class ListTagScreen
         Console.WriteLine("-------------");
         List();
         Console.ReadKey();
+        MenuTagScreen.Load();
     }
 
     private static void List()

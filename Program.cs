@@ -13,17 +13,18 @@ class Program
         var connection = new SqlConnection(_connectionString);
         connection.Open();
 
-        ReadUsers(connection);
+        ReadUsersWithRoles(connection);
+        // CreateUsers(connection);
         // ReadRoles(connection);
         // ReadTags(connection);
 
         connection.Close();
 
     }
-    public static void ReadUsers(SqlConnection connection)
+    public static void ReadUsersWithRoles(SqlConnection connection)
     {
-        var repository = new Repository<User>(connection);
-        var items = repository.Get();
+        var repository = new UserRepository(connection);
+        var items = repository.GetWithRoles();
 
         foreach (var item in items)
         {
@@ -33,6 +34,20 @@ class Program
                 Console.WriteLine($" - {role.Name}");
             }
         }
+    }
+    public static void CreateUsers(SqlConnection connection)
+    {
+        var user = new User()
+        {
+            Email = "email@thyago.io",
+            Bio = "bio",
+            Image = "imagem",
+            Name = "Name",
+            PasswordHash = "hash",
+            Slug = "slug"
+        };
+        var repository = new Repository<User>(connection);
+        repository.Create(user);
     }
     public static void ReadRoles(SqlConnection connection)
     {
